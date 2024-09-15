@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  div.subheader
+    h2 Books
+    a(href="/books/new", class="button") Add Book &#43;
+
+  table.book-grid
+    thead
+      tr
+        th Title
+        th Author
+        th Genre
+        th Year
+        th Actions
+    tbody
+      each book in books
+        tr
+          td= book.title
+          td= book.author
+          td= book.genre
+          td= book.year
+          td
+            a(href="/books/" + book.id) View &rarr;
+            | &nbsp;|&nbsp;
+            a(href="/books/" + book.id + "/edit") Edit
+            | &nbsp;|&nbsp;
+            a(href="/books/" + book.id + "/delete") Delete
