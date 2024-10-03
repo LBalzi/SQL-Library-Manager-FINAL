@@ -28,20 +28,21 @@ router.get('/new', (req, res) => {
 /* POST create new book */
 router.post('/', async (req, res, next) => {
   try {
-    const book = await Book.create(req.body);  // Attempt to create a new book
-    res.redirect('/books');  // Redirect to the books list if successful
+    const book = await Book.create(req.body);  // Sequelize automatically validates here
+    res.redirect('/books');
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
-      // Render form again with validation errors
+      // Render the form again, passing the entered data and validation errors
       res.render('books/new', {
-        book: req.body,  // Pass the data that was entered
-        errors: error.errors  // Pass the Sequelize validation errors
+        book: req.body, 
+        errors: error.errors  // This contains the friendly error messages
       });
     } else {
-      next(error);  // For other types of errors, pass it to the global error handler
+      next(error);
     }
   }
 });
+
 /* Edit book form. */
 router.get("/:id/edit", asyncHandler(async(req, res) => {
   const book = await Book.findByPk(req.params.id);
@@ -63,7 +64,7 @@ router.get("/:id", asyncHandler(async (req, res, next) => {
 }));
 
 /* Update a book. */
-router.post('/:id/edit', asyncHandler(async (req, res) => {
+router.post('/:id', asyncHandler(async (req, res) => {  // Changed to /:id instead of /:id/edit
   const book = await Book.findByPk(req.params.id);
   await book.update(req.body);
   res.redirect("/books/" + book.id);

@@ -4,6 +4,23 @@ block content
   h2= title
   
   include errors
-  
-  form(action="/books", method="post")
-    include form
+
+  form(action="/books", method="post")    
+    div
+      label(for="title") Title:
+      input(type="text", id="title", name="title", value=book.title)
+      
+    div
+      label(for="author") Author:
+      input(type="text", id="author", name="author", value=book.author)
+    
+    div
+      label(for="genre") Genre:
+      input(type="text", id="genre", name="genre", value=book.genre)
+    
+    div
+      label(for="year") Year:
+      input(type="number", name="year", id="year", value=book.year)
+    
+    div
+      input(type="submit")
